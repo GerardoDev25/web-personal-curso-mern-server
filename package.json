@@ -1,0 +1,8 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "backend para la web personal del curso",
+  "main": "index.js",
+  "author": "Gerardo Miranda",
+  "license": "MIT"
+}
