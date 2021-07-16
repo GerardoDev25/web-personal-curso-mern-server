@@ -1,4 +1,4 @@
-const API_VERSION = "1V";
+const API_VERSION = "v4";
 const IP_SERVER = "localhost";
 const PORT_DB = 27017;
 

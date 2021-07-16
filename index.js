@@ -1,23 +1,18 @@
 const mongoose = require("mongoose");
 const app = require("./app");
 const PORT_SERVER = process.env.PORT || 3977;
-const {
-   API_VERSION,
-   IP_SERVER,
-   PORT_DB,
-} = require("./config");
+const { API_VERSION, IP_SERVER, PORT_DB } = require("./config");
 
+mongoose.set("useFindAndModify", false);
 mongoose.connect(
    `mongodb://${IP_SERVER}:${PORT_DB}/gerardomiranda`,
    {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-   }
-   ,
+   },
    (err, res) => {
       if (err) {
-        //  throw err;
-        console.log('base de datos no conectada');
+         throw err;
       } else {
          console.log(
             "la coneccion a la base de datos es correcta"
