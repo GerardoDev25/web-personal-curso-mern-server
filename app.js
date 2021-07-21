@@ -1,11 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-
+const cors = require('cors')
 const app = express();
 const { API_VERSION } = require("./config");
 
 // ? load Routers
 const userRoutes = require("./routers/user");
+
+// ?use cors
+app.use(cors())
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
