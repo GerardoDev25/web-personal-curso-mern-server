@@ -1,6 +1,8 @@
 const bcryt = require("bcrypt-nodejs");
+const jwt = require("../services/jwt");
 const User = require("../models/user");
 
+// ? funtion that create a new user
 function signUp(req, res) {
    const user = new User();
 
@@ -50,6 +52,68 @@ function signUp(req, res) {
       });
 }
 
+// ? funtion make login user
+function signIn(req, res) {
+   const params = req.body;
+
+   const email = params.email.toLowerCase();
+   const password = params.password;
+
+   // * find a user with that email
+   User.findOne({ email }, (err, userStore) => {
+      // * if user exist
+
+      if (err) {
+         res.status(500).send({
+            message: "Server Error",
+         });
+      } else {
+         if (!userStore) {
+            res.status(404).send({
+               message: "User not found",
+            });
+         } else {
+            // * compare the password matched
+
+            bcryt.compare(
+               password,
+               userStore.password,
+               (err, checked) => {
+                  if (err) {
+                     res.status(500).send({
+                        message: "Server error",
+                     });
+                  } else if (!checked) {
+                     res.status(404).send({
+                        message: "user or password incorrect",
+                     });
+
+                     // * compare that user is active
+                  } else {
+                     if (!userStore.active) {
+                        res.status(200).send({
+                           code: 200,
+                           message: "user isen't active",
+                        });
+
+                        // * return the tokens if all is fine
+                     } else {
+                        res.status(200).send({
+                           accessToken:
+                              jwt.createAccesstToken(userStore),
+                           refreshToken:
+                              jwt.createRefreshToken(userStore),
+                        });
+                     }
+                  }
+               }
+            );
+         }
+      }
+   });
+}
+
 module.exports = {
    signUp,
+   signIn,
 };
