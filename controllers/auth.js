@@ -2,6 +2,7 @@ const jwt = require("../services/jwt");
 const User = require("../models/user");
 const moment = require("moment");
 
+// ? funtion that compare if the token to expired
 function willExpiredToken(token) {
    const { exp } = jwt.decodeToken(token);
    const currentDate = moment().unix();
@@ -9,14 +10,15 @@ function willExpiredToken(token) {
    return currentDate > exp ? true : false;
 }
 
+// ? funtion that return a new token
 function refreshAccessToken(req, res) {
    const { refreshToken } = req.body;
    const isTokenExpired = willExpiredToken(refreshToken);
 
    // * check the token expired
-   if (isTokenExpired) {
+   if (isTokenExpired)
       res.status(404).send({ message: "refreshToken Expired" });
-   } else {
+   else {
       //
       // * get token id and find the user
       const { id } = jwt.decodeToken(refreshToken);
@@ -26,24 +28,22 @@ function refreshAccessToken(req, res) {
 
             // * if user exit make ...
          } else {
-            if (!userStore) {
+            if (!userStore)
                res.status(404).send({
                   message: "User not Found",
                });
-            } else {
-               //
-               // * if all is fine then send new tokens
+            //
+            // * if all is fine then send new tokens
+            else
                res.status(200).send({
                   accessToken: jwt.createAccesstToken(userStore),
                   refreshToken,
                });
-            }
          }
       });
    }
 }
 
 module.exports = {
-   //    willExpiredToken,
    refreshAccessToken,
 };

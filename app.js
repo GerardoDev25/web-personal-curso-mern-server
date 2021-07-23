@@ -1,8 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require('cors')
-const app = express();
+
 const { API_VERSION } = require("./config");
+
+const app = express();
 
 // ? load Routers
 const authRoutes = require("./routers/auth");
