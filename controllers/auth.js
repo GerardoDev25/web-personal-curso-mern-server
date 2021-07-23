@@ -1,6 +1,7 @@
 const jwt = require("../services/jwt");
-const User = require("../models/user");
 const moment = require("moment");
+
+const User = require("../models/user");
 
 // ? funtion that compare if the token to expired
 function willExpiredToken(token) {
