@@ -128,8 +128,26 @@ function getUsers(req, res) {
    });
 }
 
+// ? funtion that return all users active
+function getUsersActive(req, res) {
+   const query = req.query;
+
+   User.find({ active: query.active }).then((Users) => {
+      if (!Users) {
+         res.status(404).send({
+            message: "User not found",
+         });
+      } else {
+         res.status(200).send({
+            Users,
+         });
+      }
+   });
+}
+
 module.exports = {
    signUp,
    signIn,
    getUsers,
+   getUsersActive,
 };
