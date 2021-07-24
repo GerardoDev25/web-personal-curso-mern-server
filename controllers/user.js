@@ -113,7 +113,22 @@ function signIn(req, res) {
    });
 }
 
+function getUsers(req, res) {
+   User.find().then((Users) => {
+      if (!Users) {
+         res.status(404).send({
+            message: "User not found",
+         });
+      } else {
+         res.status(200).send({
+            Users,
+         });
+      }
+   });
+}
+
 module.exports = {
    signUp,
    signIn,
+   getUsers,
 };
