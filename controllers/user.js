@@ -113,6 +113,7 @@ function signIn(req, res) {
    });
 }
 
+// ? funtion that return a list users
 function getUsers(req, res) {
    User.find().then((Users) => {
       if (!Users) {
