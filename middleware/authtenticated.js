@@ -3,6 +3,8 @@ const moment = require("moment");
 
 const SECRET_KEY = "fTd7E12STOesunAClabaSecRetAf13DsHff";
 
+// ? function that blocked users no login
+
 exports.ensureAuth = (req, res, next) => {
    if (!req.headers.authorization) {
       return res.status(403).send({
